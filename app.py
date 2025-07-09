@@ -37,7 +37,7 @@ if st.button("Summarize in Plain Language"):
                 )
 
                 response = client.chat.completions.create(
-                    model="gpt-4",
+                    model="gpt-3.5-turbo",
                     messages=[
                         {"role": "system", "content": "You simplify clinical notes into plain language summaries."},
                         {"role": "user", "content": prompt}
@@ -63,7 +63,7 @@ with st.expander("🔐 Learn more about how we protect your privacy"):
 
     - We don’t require you to sign up or create an account.
     - Your notes are **not stored or logged** — once your summary is generated, the text is gone.
-    - We use a secure AI model (like OpenAI’s GPT-4) to generate summaries, and that’s it.
+    - We use a secure AI model (like OpenAI’s GPT-3.5) to generate summaries, and that’s it.
     - You can remove names or personal details if you prefer — PlainNotes still works.
 
     **You’re always in control.**  
