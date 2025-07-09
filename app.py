@@ -1,8 +1,8 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import os
 
-# Set your OpenAI API key here or use environment variable
+# Get your OpenAI API key from environment variables
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 st.set_page_config(page_title="PlainNotes", page_icon="📝")
@@ -18,7 +18,6 @@ Just paste your medical notes below, and we’ll simplify them into plain langua
 # User input for clinical notes
 input_notes = st.text_area("Paste your doctor's notes here:", height=200)
 
-# Summarize with OpenAI
 if st.button("Summarize in Plain Language"):
     if not openai_api_key:
         st.error("OpenAI API key not found. Please set your API key in the environment variable 'OPENAI_API_KEY'.")
@@ -27,7 +26,7 @@ if st.button("Summarize in Plain Language"):
     elif len(input_notes) > 3000:
         st.error("Note is too long. Please shorten the input to under 3000 characters.")
     else:
-        openai.api_key = openai_api_key
+        client = OpenAI(api_key=openai_api_key)
         with st.spinner("Generating summary..."):
             try:
                 prompt = (
@@ -37,7 +36,7 @@ if st.button("Summarize in Plain Language"):
                     f"Doctor's note:\n{input_notes}\n\nPlain language summary:"
                 )
 
-                response = openai.ChatCompletion.create(
+                response = client.chat.completions.create(
                     model="gpt-4",
                     messages=[
                         {"role": "system", "content": "You simplify clinical notes into plain language summaries."},
